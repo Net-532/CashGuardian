@@ -38,7 +38,7 @@ namespace CashGuardian
             {
                 User user = AuthenticationService.Authenticate(username, password);
 
-                MainWindow Main = new MainWindow(user);
+                MainWindow Main = new MainWindow();
                 Main.Show();
 
                 this.Close();

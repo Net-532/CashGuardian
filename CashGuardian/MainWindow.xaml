@@ -1,9 +1,14 @@
 ﻿<Window x:Class="CashGuardian.MainWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        WindowState="Normal"
-        Title="Main Window" Height="359" Width="670">
-    <Grid>
-        <TextBlock HorizontalAlignment="Center" x:Name="HelloBox" VerticalAlignment="Center" Text="Hello, {username}!"/>
-    </Grid>
+        Title="Додаток для ведення бюджету" Height="450" Width="800">
+    <DockPanel>
+        <StackPanel DockPanel.Dock="Left" Width="200" Background="#DDD">
+            <Button Name="btnSettings" Margin="5">Налаштування</Button>
+            <Button Name="btnAbout" Margin="5">Про програму</Button>
+            <Button Name="btnExit" Margin="5">Вийти</Button>
+        </StackPanel>
+        <Grid DockPanel.Dock="Right" Background="#FFF">
+        </Grid>
+    </DockPanel>
 </Window>

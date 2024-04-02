@@ -14,10 +14,27 @@ namespace CashGuardian
 {
     public partial class MainWindow : Window
     {
-        public MainWindow(User user)
+        public MainWindow()
         {
             InitializeComponent();
-            HelloBox.Text = $"Привіт, {user.Name}!";
+            btnSettings.Click += BtnSettings_Click;
+            btnAbout.Click += BtnAbout_Click;
+            btnExit.Click += BtnExit_Click;
+        }
+
+        private void BtnSettings_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Натиснули кнопку Налаштування");
+        }
+
+        private void BtnAbout_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Натиснули кнопку Про програму");
+        }
+
+        private void BtnExit_Click(object sender, RoutedEventArgs e)
+        {
+            Application.Current.Shutdown();
         }
     }
 }

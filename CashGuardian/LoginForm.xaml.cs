@@ -2,6 +2,7 @@
 using CashGuardian.Services;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Security.Authentication;
 using System.Text;
@@ -61,6 +62,49 @@ namespace CashGuardian
         private void BoxChanged(object sender, RoutedEventArgs e)
         {
             LoginButton.IsEnabled = !string.IsNullOrEmpty(UsernameTextBox.Text) && !string.IsNullOrEmpty(PasswordBox.Password);
+        }
+
+        private void UsernameTextBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (UsernameTextBox.Text == "Username")
+            {
+                UsernameTextBox.Text = "";
+                UsernameTextBox.Foreground = Brushes.Black;
+            }
+        }
+
+        private void UsernameTextBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (string.IsNullOrWhiteSpace(UsernameTextBox.Text))
+            {
+                UsernameTextBox.Text = "Username";
+                UsernameTextBox.Foreground = Brushes.Gray;
+            }
+        }
+
+        private void PasswordBox_GotFocus(object sender, RoutedEventArgs e)
+        {
+            if (PasswordBox.Password == "")
+            {
+                PasswordBox.Foreground = Brushes.Black;
+            }
+        }
+
+        private void PasswordBox_LostFocus(object sender, RoutedEventArgs e)
+        {
+            if (PasswordBox.Password == "")
+            {
+                PasswordBox.Foreground = Brushes.Gray;
+            }
+        }
+
+        private void TextBlock_MouseUp(object sender, MouseButtonEventArgs e)
+        {
+            Process.Start(new ProcessStartInfo
+            {
+                FileName = "https://kakadu.s3.eu-central-1.amazonaws.com/test-folder/photo_2024-04-01_17-38-05.jpg",
+                UseShellExecute = true
+            });
         }
     }
 }

@@ -8,4 +8,20 @@
     <UseWPF>true</UseWPF>
   </PropertyGroup>
 
+  <ItemGroup>
+    <None Remove="close-eye.png" />
+    <None Remove="cross.png" />
+    <None Remove="open-eye.png" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Images\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Resource Include="close-eye.png" />
+    <Resource Include="cross.png" />
+    <Resource Include="open-eye.png" />
+  </ItemGroup>
+
 </Project>

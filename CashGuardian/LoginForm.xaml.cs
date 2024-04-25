@@ -30,8 +30,6 @@ namespace CashGuardian
 
         private void LoginButton_Click(object sender, RoutedEventArgs e)
         {
-            // Placeholder logic for authentication
-            // Replace with actual authentication logic as necessary
             string username = UsernameTextBox.Text;
             string password = PasswordBox.Password;
 
@@ -106,5 +104,31 @@ namespace CashGuardian
                 UseShellExecute = true
             });
         }
+
+        private bool _isPasswordVisible = false;
+
+        private void TogglePasswordVisibility(object sender, RoutedEventArgs e)
+        {
+            // show and hide password feature
+            _isPasswordVisible = !_isPasswordVisible;
+            if (_isPasswordVisible)
+            {
+                PasswordBox.Visibility = Visibility.Collapsed;
+                PlainTextPasswordBox.Visibility = Visibility.Visible;
+                PlainTextPasswordBox.Text = PasswordBox.Password;
+                ((Button)sender).Content = new Image { Source = new BitmapImage(new Uri("pack://application:,,,/open-eye.png")), Opacity = 0.9 };
+                ((ToolTip)((Button)sender).ToolTip).Content = "Hide Password";
+            }
+            else
+            {
+                PasswordBox.Visibility = Visibility.Visible;
+                PlainTextPasswordBox.Visibility = Visibility.Collapsed;
+                PasswordBox.Password = PlainTextPasswordBox.Text;
+                ((Button)sender).Content = new Image { Source = new BitmapImage(new Uri("pack://application:,,,/close-eye.png")), Opacity = 0.9 };
+                ((ToolTip)((Button)sender).ToolTip).Content = "Show Password";
+            }
+        }
+
+
     }
 }

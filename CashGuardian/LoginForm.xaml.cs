@@ -37,7 +37,8 @@ namespace CashGuardian
 
             try
             {
-                User user = AuthenticationService.Authenticate(username, password);
+                AuthenticationService serviceAuth = new AuthenticationService();
+                User user = serviceAuth.Authenticate(username, password);
 
                 MainWindow Main = new MainWindow();
                 Main.Show();
@@ -106,5 +107,31 @@ namespace CashGuardian
                 UseShellExecute = true
             });
         }
+
+        private bool _isPasswordVisible = false;
+
+        private void TogglePasswordVisibility(object sender, RoutedEventArgs e)
+        {
+            _isPasswordVisible = !_isPasswordVisible;
+            if (_isPasswordVisible)
+            {
+                PasswordBox.Visibility = Visibility.Collapsed;
+                // Assuming there is a TextBox to show the password in plain text
+                PlainTextPasswordBox.Visibility = Visibility.Visible;
+                PlainTextPasswordBox.Text = PasswordBox.Password;
+                ((Button)sender).Content = new Image { Source = new BitmapImage(new Uri("pack://application:,,,/open-eye.png")), Opacity = 0.9 };
+                ((ToolTip)((Button)sender).ToolTip).Content = "Hide Password";
+            }
+            else
+            {
+                PasswordBox.Visibility = Visibility.Visible;
+                PlainTextPasswordBox.Visibility = Visibility.Collapsed;
+                PasswordBox.Password = PlainTextPasswordBox.Text;
+                ((Button)sender).Content = new Image { Source = new BitmapImage(new Uri("pack://application:,,,/close-eye.png")), Opacity = 0.9 };
+                ((ToolTip)((Button)sender).ToolTip).Content = "Show Password";
+            }
+        }
+
+
     }
 }

@@ -4,7 +4,10 @@ using System.Linq;
 using System.Security.Authentication;
 using CashGuardian;
 using System;
-using System.Xml.Linq;
+using System.Data.SqlClient;
+using CashGuardian.Models;
+using CashGuardian.modules;
+using System.Configuration;
 
 namespace CashGuardian.Exceptions
 {
@@ -19,25 +22,39 @@ namespace CashGuardian.Services
 {
     public class AuthenticationService
     {
-        static private List<User> users = new List<User>()
+        public User Authenticate(string username, string password)
         {
-        // Initial users - in a real application, these would be managed in a database
-        new User() { Username = "user1", Name = "John Doe", Password = "password123" },
-        new User() { Username = "user2", Name = "Jane Doe", Password = "password456" }
-        };
+            User user = new User();
 
-        static public User Authenticate(string username, string password)
-        {
-            bool userExists = users.Where(u => u.Username == username && u.Password == password).Any();
-
-            if (!userExists)
+            try
             {
-                throw new AuthenticationException("Користувача не знайдено або пароль неправильний!");
+                using (var connection = DatabaseConnection.Instance.GetConnection())
+                {
+                    connection.Open();
+                    var command = connection.CreateCommand();
+                    command.CommandText = "SELECT username FROM users WHERE username = @username AND password = @password";
+                    command.Parameters.AddWithValue("@username", username);
+                    command.Parameters.AddWithValue("@password", password);
+
+                    var result = command.ExecuteScalar().ToString();
+                    if (result == null)
+                    {
+                        throw new AuthenticationException("Користувача не знайдено або пароль неправильний!");
+                    }
+                    user.Name = result;
+                    return user;
+                }
             }
-
-            var user = users.First(u => u.Username == username);
-
-            return user;
+            catch (SqlException ex)
+            {
+                Console.WriteLine($"SQL Error: {ex.Message}");
+                throw;
+            }
+            catch (Exception ex)
+            {
+                Console.WriteLine($"Error: {ex.Message}");
+                throw;
+            }
         }
 
     }
